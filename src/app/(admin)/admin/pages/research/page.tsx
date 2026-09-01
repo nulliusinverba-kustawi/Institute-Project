@@ -46,10 +46,16 @@ export default async function ResearchPageHeroEditor() {
       updatedAt: sections?.find((s) => s.section === 'sexual_abuse_boys_men_description')?.updated_at,
     },
     {
-      section:   'current_issues_description',
-      label:     'Current Issues — Description',
-      value:     sections?.find((s) => s.section === 'current_issues_description')?.content ?? '',
-      updatedAt: sections?.find((s) => s.section === 'current_issues_description')?.updated_at,
+      section:   'mmbm_description',
+      label:     'MMBM — Description',
+      value:     sections?.find((s) => s.section === 'mmbm_description')?.content ?? '',
+      updatedAt: sections?.find((s) => s.section === 'mmbm_description')?.updated_at,
+    },
+    {
+      section:   'racial_profiling_description',
+      label:     'Racial Profiling — Description',
+      value:     sections?.find((s) => s.section === 'racial_profiling_description')?.content ?? '',
+      updatedAt: sections?.find((s) => s.section === 'racial_profiling_description')?.updated_at,
     },
     {
       section:   'disabilities_description',

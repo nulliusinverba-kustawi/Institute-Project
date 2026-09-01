@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Megaphone, ScrollText, BarChart2, Building2, Send, ShieldAlert, Newspaper, Accessibility, Users, type LucideIcon } from 'lucide-react'
+import { Megaphone, ScrollText, BarChart2, Building2, Send, ShieldAlert, Users2, Scale, Accessibility, Users, type LucideIcon } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 import { RESEARCH_CATEGORY_LABELS } from '@/types'
 import type { ResearchCategory } from '@/types'
@@ -34,7 +34,8 @@ const CATEGORY_ICONS: Record<ResearchCategory, LucideIcon> = {
   'reports':               BarChart2,
   'research-institutes':   Building2,
   'sexual-abuse-boys-men': ShieldAlert,
-  'current-issues':        Newspaper,
+  'mmbm':                  Users2,
+  'racial-profiling':      Scale,
   'disabilities':          Accessibility,
   'sexualities':           Users,
 }

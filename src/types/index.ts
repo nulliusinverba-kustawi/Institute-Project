@@ -276,7 +276,8 @@ export type ResearchCategory =
   | 'reports'
   | 'research-institutes'
   | 'sexual-abuse-boys-men'
-  | 'current-issues'
+  | 'mmbm'                    // sub-category of the "Current Issues" nav group
+  | 'racial-profiling'        // sub-category of the "Current Issues" nav group
   | 'disabilities'
   | 'sexualities'
 
@@ -287,11 +288,14 @@ export const RESEARCH_CATEGORIES: ResearchCategory[] = [
   'reports',
   'research-institutes',
   'sexual-abuse-boys-men',
-  'current-issues',
+  'mmbm',
+  'racial-profiling',
   'disabilities',
   'sexualities',
 ]
 
+// mmbm/racial-profiling are not top-level nav links — they're grouped under a
+// "Current Issues" flyout in Header.tsx (see CURRENT_ISSUES_CATEGORIES there).
 export const RESEARCH_CATEGORY_LABELS: Record<ResearchCategory, string> = {
   'announcements':         'Call for Participants',
   'call-for-papers':       'Call for Papers',
@@ -299,7 +303,8 @@ export const RESEARCH_CATEGORY_LABELS: Record<ResearchCategory, string> = {
   'reports':               'Reports',
   'research-institutes':   'Research Institutes and Initiatives',
   'sexual-abuse-boys-men': 'Sexual Abuse of Boys and Men',
-  'current-issues':        'Current Issues',
+  'mmbm':                  'MMBM',
+  'racial-profiling':      'Racial Profiling',
   'disabilities':          'Disabilities',
   'sexualities':           'Sexualities',
 }

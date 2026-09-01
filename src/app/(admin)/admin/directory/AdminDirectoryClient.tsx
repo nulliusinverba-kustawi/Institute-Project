@@ -157,7 +157,7 @@ export default function AdminDirectoryClient({ entries: initial }: Props) {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] w-fit">
+        <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface)] dark:bg-[var(--color-dark-surface)] overflow-x-auto">
           {TABS.map(({ category, label }) => (
             <button key={category} onClick={() => handleTabChange(category)} className={tabClass(activeTab === category)}>
               {label}

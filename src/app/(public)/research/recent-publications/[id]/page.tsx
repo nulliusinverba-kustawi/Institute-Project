@@ -2,6 +2,7 @@ import { cache } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ExternalLink } from 'lucide-react'
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import ResearchCard from '@/components/research/ResearchCard'
@@ -97,6 +98,17 @@ export default async function RecentPublicationDetailPage({ params }: Props) {
         <h1 className="font-display text-3xl md:text-4xl font-bold text-[var(--color-text-primary)] dark:text-white leading-tight">
           {post.title}
         </h1>
+        {post.external_url && (
+          <a
+            href={post.external_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-brand-teal)] hover:bg-[var(--color-brand-teal-dark)] text-white text-sm font-medium transition-colors duration-200"
+          >
+            <ExternalLink className="w-4 h-4" />
+            View Publication
+          </a>
+        )}
       </header>
 
       <div

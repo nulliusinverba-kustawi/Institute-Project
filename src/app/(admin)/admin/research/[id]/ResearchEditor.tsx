@@ -428,7 +428,7 @@ export default function ResearchEditor({ post, initialCoverUrl }: ResearchEditor
                   <option key={val} value={val}>{label}</option>
                 ))}
               </select>
-              {category === 'sexual-abuse-boys-men' && (
+              {(category === 'sexual-abuse-boys-men' || category === 'mmbm' || category === 'racial-profiling') && (
                 <p className="text-xs text-[var(--color-text-muted)]">
                   Link to the full paper, book listing, or video using External URL above.
                 </p>
