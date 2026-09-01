@@ -19,7 +19,8 @@ const CATEGORY_SECTION_KEYS: Record<ResearchCategory, string> = {
   'reports':               'reports_description',
   'research-institutes':   'research_institutes_description',
   'sexual-abuse-boys-men': 'sexual_abuse_boys_men_description',
-  'current-issues':        'current_issues_description',
+  'mmbm':                  'mmbm_description',
+  'racial-profiling':      'racial_profiling_description',
   'disabilities':          'disabilities_description',
   'sexualities':           'sexualities_description',
 }
@@ -31,7 +32,8 @@ const CATEGORY_FALLBACKS: Record<ResearchCategory, string> = {
   'reports':               'Access in-depth reports, analyses, and findings produced by our researchers and collaborators.',
   'research-institutes':   'Discover research institutes and organizations affiliated with our work.',
   'sexual-abuse-boys-men': 'Research papers, books, and films on the sexual abuse of boys and men.',
-  'current-issues':        'Perspectives and resources on current issues affecting our community.',
+  'mmbm':                  'Perspectives and resources on MMBM affecting our community.',
+  'racial-profiling':      'Perspectives and resources on racial profiling affecting our community.',
   'disabilities':          'Research, resources, and perspectives on disabilities affecting our community.',
   'sexualities':           'Research, resources, and perspectives on sexualities affecting our community.',
 }

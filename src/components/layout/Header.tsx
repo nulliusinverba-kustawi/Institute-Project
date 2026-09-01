@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X, Search, ChevronDown, ChevronUp } from 'lucide-react'
+import { Menu, X, Search, ChevronDown, ChevronUp, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ThemeToggle } from './ThemeToggle'
 import { SearchBar } from './SearchBar'
@@ -54,6 +54,8 @@ export function Header({ navItems, logoUrl, siteName = 'Institute', showReferral
   const [servicesAccordionOpen, setServicesAccordionOpen] = useState(false)
   const [researchDropdownOpen, setResearchDropdownOpen] = useState(false)
   const [researchAccordionOpen, setResearchAccordionOpen] = useState(false)
+  const [currentIssuesFlyoutOpen, setCurrentIssuesFlyoutOpen] = useState(false)
+  const [currentIssuesAccordionOpen, setCurrentIssuesAccordionOpen] = useState(false)
   const [readingListDropdownOpen, setReadingListDropdownOpen] = useState(false)
   const [readingListAccordionOpen, setReadingListAccordionOpen] = useState(false)
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false)
@@ -224,18 +226,70 @@ export function Header({ navItems, logoUrl, siteName = 'Institute', showReferral
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.15, ease: 'easeOut' }}
-                          className="absolute top-full left-0 mt-2 w-56 rounded-xl border border-[var(--color-border)] dark:border-[var(--color-dark-border)] bg-[var(--color-background)] dark:bg-[var(--color-dark-surface)] shadow-lg overflow-hidden z-50"
+                          className="absolute top-full left-0 mt-2 w-56 rounded-xl border border-[var(--color-border)] dark:border-[var(--color-dark-border)] bg-[var(--color-background)] dark:bg-[var(--color-dark-surface)] shadow-lg z-50"
                         >
-                          {visibleResearchCategories.map((cat, i) => (
-                            <Link
-                              key={cat}
-                              href={`/research/${cat}`}
-                              className={`block px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-brand-teal)] dark:hover:text-white hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface-hover)] transition-colors ${i > 0 ? 'border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]' : ''}`}
-                              onClick={() => setResearchDropdownOpen(false)}
-                            >
-                              {RESEARCH_CATEGORY_LABELS[cat]}
-                            </Link>
-                          ))}
+                          {visibleResearchCategories.map((cat, i) => {
+                            if (cat === 'racial-profiling') return null
+                            if (cat === 'mmbm') {
+                              const isFirst = i === 0
+                              const isLast  = i === visibleResearchCategories.length - 1 // 'racial-profiling' is skipped, so 'mmbm' can be last
+                              return (
+                                <div
+                                  key="current-issues"
+                                  className="relative"
+                                  onMouseEnter={() => setCurrentIssuesFlyoutOpen(true)}
+                                  onMouseLeave={() => setCurrentIssuesFlyoutOpen(false)}
+                                >
+                                  <Link
+                                    href="/research/current-issues"
+                                    className={`flex items-center justify-between gap-2 px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-brand-teal)] dark:hover:text-white hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface-hover)] transition-colors ${isFirst ? 'rounded-t-xl' : 'border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]'} ${isLast ? 'rounded-b-xl' : ''}`}
+                                    onClick={() => { setResearchDropdownOpen(false); setCurrentIssuesFlyoutOpen(false) }}
+                                  >
+                                    Current Issues
+                                    <ChevronRight className="h-3.5 w-3.5 opacity-60 shrink-0" />
+                                  </Link>
+                                  <AnimatePresence>
+                                    {currentIssuesFlyoutOpen && (
+                                      <motion.div
+                                        initial={{ opacity: 0, x: -6 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -6 }}
+                                        transition={{ duration: 0.15, ease: 'easeOut' }}
+                                        className="absolute top-0 left-full ml-1 w-52 rounded-xl border border-[var(--color-border)] dark:border-[var(--color-dark-border)] bg-[var(--color-background)] dark:bg-[var(--color-dark-surface)] shadow-lg overflow-hidden z-50"
+                                      >
+                                        <Link
+                                          href="/research/mmbm"
+                                          className="block px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-brand-teal)] dark:hover:text-white hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface-hover)] transition-colors"
+                                          onClick={() => { setResearchDropdownOpen(false); setCurrentIssuesFlyoutOpen(false) }}
+                                        >
+                                          MMBM
+                                        </Link>
+                                        <Link
+                                          href="/research/racial-profiling"
+                                          className="block px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-brand-teal)] dark:hover:text-white hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface-hover)] transition-colors border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]"
+                                          onClick={() => { setResearchDropdownOpen(false); setCurrentIssuesFlyoutOpen(false) }}
+                                        >
+                                          Racial Profiling
+                                        </Link>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                              )
+                            }
+                            const isFirst = i === 0
+                            const isLast  = i === visibleResearchCategories.length - 1
+                            return (
+                              <Link
+                                key={cat}
+                                href={`/research/${cat}`}
+                                className={`block px-4 py-3 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-brand-teal)] dark:hover:text-white hover:bg-[var(--color-surface)] dark:hover:bg-[var(--color-dark-surface-hover)] transition-colors ${isFirst ? 'rounded-t-xl' : 'border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]'} ${isLast ? 'rounded-b-xl' : ''}`}
+                                onClick={() => setResearchDropdownOpen(false)}
+                              >
+                                {RESEARCH_CATEGORY_LABELS[cat]}
+                              </Link>
+                            )
+                          })}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -494,16 +548,68 @@ export function Header({ navItems, logoUrl, siteName = 'Institute', showReferral
                             <Link href="/research" onClick={() => { setMobileOpen(false); setResearchAccordionOpen(false) }} className="px-3 py-2 rounded-md text-sm font-semibold text-brand-teal dark:text-white border-b border-border dark:border-dark-border mb-0.5 pb-2">
                               All Research
                             </Link>
-                            {visibleResearchCategories.map((cat) => (
-                              <Link
-                                key={cat}
-                                href={`/research/${cat}`}
-                                onClick={() => { setMobileOpen(false); setResearchAccordionOpen(false) }}
-                                className="px-3 py-2 rounded-md text-sm text-text-muted hover:text-brand-teal dark:hover:text-white transition-colors"
-                              >
-                                {RESEARCH_CATEGORY_LABELS[cat]}
-                              </Link>
-                            ))}
+                            {visibleResearchCategories.map((cat) => {
+                              if (cat === 'racial-profiling') return null
+                              if (cat === 'mmbm') {
+                                return (
+                                  <div key="current-issues-mobile">
+                                    <button
+                                      onClick={() => setCurrentIssuesAccordionOpen((v) => !v)}
+                                      className="w-full flex items-center justify-between px-3 py-2 rounded-md text-sm text-text-muted hover:text-brand-teal dark:hover:text-white transition-colors cursor-pointer"
+                                    >
+                                      Current Issues
+                                      {currentIssuesAccordionOpen
+                                        ? <ChevronUp className="h-3.5 w-3.5 opacity-60" />
+                                        : <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+                                      }
+                                    </button>
+                                    <AnimatePresence>
+                                      {currentIssuesAccordionOpen && (
+                                        <motion.div
+                                          initial={{ opacity: 0, height: 0 }}
+                                          animate={{ opacity: 1, height: 'auto' }}
+                                          exit={{ opacity: 0, height: 0 }}
+                                          transition={{ duration: 0.15, ease: 'easeOut' }}
+                                          className="overflow-hidden pl-4 flex flex-col gap-0.5 mt-0.5"
+                                        >
+                                          <Link
+                                            href="/research/current-issues"
+                                            onClick={() => { setMobileOpen(false); setResearchAccordionOpen(false); setCurrentIssuesAccordionOpen(false) }}
+                                            className="px-3 py-2 rounded-md text-sm font-semibold text-brand-teal dark:text-white border-b border-border dark:border-dark-border mb-0.5 pb-2"
+                                          >
+                                            All Current Issues
+                                          </Link>
+                                          <Link
+                                            href="/research/mmbm"
+                                            onClick={() => { setMobileOpen(false); setResearchAccordionOpen(false); setCurrentIssuesAccordionOpen(false) }}
+                                            className="px-3 py-2 rounded-md text-sm text-text-muted hover:text-brand-teal dark:hover:text-white transition-colors"
+                                          >
+                                            MMBM
+                                          </Link>
+                                          <Link
+                                            href="/research/racial-profiling"
+                                            onClick={() => { setMobileOpen(false); setResearchAccordionOpen(false); setCurrentIssuesAccordionOpen(false) }}
+                                            className="px-3 py-2 rounded-md text-sm text-text-muted hover:text-brand-teal dark:hover:text-white transition-colors"
+                                          >
+                                            Racial Profiling
+                                          </Link>
+                                        </motion.div>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                )
+                              }
+                              return (
+                                <Link
+                                  key={cat}
+                                  href={`/research/${cat}`}
+                                  onClick={() => { setMobileOpen(false); setResearchAccordionOpen(false) }}
+                                  className="px-3 py-2 rounded-md text-sm text-text-muted hover:text-brand-teal dark:hover:text-white transition-colors"
+                                >
+                                  {RESEARCH_CATEGORY_LABELS[cat]}
+                                </Link>
+                              )
+                            })}
                           </motion.div>
                         )}
                       </AnimatePresence>
